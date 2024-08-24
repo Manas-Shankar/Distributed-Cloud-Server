@@ -1,0 +1,2 @@
+protoc -I . --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` frontend_backend_master.proto
+protoc -I . --cpp_out=. frontend_backend_master.proto

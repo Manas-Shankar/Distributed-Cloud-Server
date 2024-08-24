@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package penncloud.frontend;
+
+// Empty request placeholder
+message Empty {}
+
+// Acknowledgment message
+message Acknowledgment {
+  bool success = 1;
+  string message = 2;
+}
+
+// Information about a single backend node
+message Node {
+  string id = 1;
+  string address = 2;
+  int32 port = 3;
+  bool isHealthy = 4;
+}
+
+// Updates about backend nodes
+message NodeUpdate {
+  repeated Node nodes = 1;
+}
+
+// Service provided by the Backend Master for frontend servers
+service FrontendBackendMasterService {
+  // Registers frontend server to receive updates
+  rpc RegisterFrontend(Empty) returns (Acknowledgment) {}
+  
+  // Asynchronous update about backend nodes' status
+  rpc ReceiveNodeUpdate(NodeUpdate) returns (Acknowledgment) {}
+}
