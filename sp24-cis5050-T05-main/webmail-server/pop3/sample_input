@@ -1,0 +1,23 @@
+grpcurl -plaintext -d '{"session_id": "12345", "command": "USER linhphan"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "PASS cis505"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "STAT"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "RETR 1"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "DELE 1"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "LIST"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+
+
+grpcurl -plaintext -d '{"session_id": "12345", "UIDL linhphan\r\n"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+
+grpcurl -plaintext -d '{"session_id": "12345", "PASS cis505\r\n"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+
+grpcurl -plaintext -d '{"session_id": "12345", "STAT\r\n"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "RETR 1\r\n"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+
+grpcurl -plaintext -d '{"session_id": "12345", "DELE 1\r\n"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+
+grpcurl -plaintext -d '{"session_id": "12345", "QUIT\r\n"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "USER\r\n"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+
+grpcurl -plaintext -d '{"session_id": "12345", "PASS linhphan\r\n"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
+
+grpcurl -plaintext -d '{"session_id": "12345", "PASS linhphan\r\n"}' localhost:5003 webmailgrpc.WebmailService/SendCommand
