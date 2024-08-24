@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package backendmaster;
+
+// Service definition
+service BackendMasterService {
+  rpc NotifyRecovery(NotifyRecoveryRequest) returns (NotifyRecoveryResponse) {};
+  rpc GetPrimary(PrimaryRequest) returns (PrimaryNode) {};
+  rpc ListNodes(ListNodesRequest) returns (NodesList) {};
+  rpc GetNodeAddress(GetNodeAddressRequest) returns (GetNodeAddressResponse) {}; 
+}
+
+// Request message
+message NotifyRecoveryRequest {
+  string node_address = 1; // The address of the node that has recovered
+}
+
+// Response message
+message NotifyRecoveryResponse {
+  string message = 1; // Optional message field for additional information
+}
+
+message PrimaryRequest {
+  string caller_address = 1;
+}
+
+
+message PrimaryNode {
+  string primary_address = 1;
+}
+
+message ListNodesRequest {}
+
+message Node {
+  string address = 1;
+  string status = 2;
+  int32 group = 3;
+}
+
+message NodesList {
+  repeated Node nodes = 1;
+}
+
+message GetNodeAddressRequest {
+  string key = 1;  // The key to query the node address
+}
+
+message GetNodeAddressResponse {
+  string address = 1;  // The corresponding address for the key
+}

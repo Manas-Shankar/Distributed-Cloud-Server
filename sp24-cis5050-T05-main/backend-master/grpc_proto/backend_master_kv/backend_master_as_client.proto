@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package backendmaster;
+
+import "kv_lifecycle.proto"; // Assuming kv_lifecycle.proto has all needed messages
+
+// The gRPC service definition for backend master acting as a client
+service BackendMasterClientService {
+  rpc Shutdown(kvstore.ShutdownRequest) returns (kvstore.ShutdownResponse) {};
+  rpc Restart(kvstore.RestartRequest) returns (kvstore.RestartResponse) {};
+  rpc CheckHealth(kvstore.HealthCheckRequest) returns (kvstore.HealthCheckResponse) {};
+  rpc SetPrimary(kvstore.SetPrimaryRequest) returns (kvstore.SetPrimaryResponse) {};
+  rpc ActiveNodes(kvstore.ActiveNodesRequest) returns (kvstore.ActiveNodesResponse) {};
+}

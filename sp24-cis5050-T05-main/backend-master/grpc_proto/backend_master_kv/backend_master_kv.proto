@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package penncloud.backend;
+
+// Request for node health check
+message HealthCheckRequest {
+  string nodeId = 1;
+}
+
+// Response for node health check
+message HealthCheckResponse {
+  bool isHealthy = 1;
+}
+
+// Node load report
+message LoadReport {
+  string nodeId = 1;
+  double cpuUsage = 2;
+  double memoryUsage = 3;
+}
+
+// Acknowledgment message
+message Acknowledgment {
+  bool success = 1;
+  string message = 2;
+}
+
+// Service for managing backend nodes
+service BackendMasterKVService {
+  // Health check for a backend node
+  rpc CheckNodeHealth(HealthCheckRequest) returns (HealthCheckResponse) {}
+
+  // Receives load reports from backend nodes
+  rpc ReportNodeLoad(LoadReport) returns (Acknowledgment) {}
+}
