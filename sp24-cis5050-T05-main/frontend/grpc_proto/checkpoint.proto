@@ -1,0 +1,32 @@
+// checkpoint_service.proto
+syntax = "proto3";
+
+package checkpoint;
+
+// The checkpoint service definition.
+service CheckpointService {
+  // Starts checkpointing with a given version number.
+  rpc StartCheckpointing(StartCheckpointingRequest) returns (StartCheckpointingResponse);
+
+  // Completes checkpointing for a given version number.
+  rpc CompleteCheckpoint(CompleteCheckpointRequest) returns (CompleteCheckpointResponse);
+}
+
+// Request message for starting checkpointing.
+message StartCheckpointingRequest {
+  int64 checkpoint_version = 1;
+}
+
+// Response for starting checkpointing.
+message StartCheckpointingResponse {
+  bool ack = 1;
+}
+
+// Request message for completing checkpointing.
+message CompleteCheckpointRequest {
+  int64 checkpoint_version = 1;
+}
+
+// Response message for completing checkpointing.
+message CompleteCheckpointResponse {
+}

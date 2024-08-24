@@ -1,0 +1,58 @@
+// kv_store.proto
+
+syntax = "proto3";
+
+package kvstore;
+
+// The KeyValue service definition.
+service KeyValue {
+  rpc Put(PutRequest) returns (PutResponse) {}
+  rpc Get(GetRequest) returns (GetResponse) {}
+  rpc CPut(CPutRequest) returns (CPutResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+}
+
+// Request messages
+message PutRequest {
+  string row = 1;
+  string column = 2;
+  bytes value = 3;
+}
+
+message GetRequest {
+  string row = 1;
+  string column = 2;
+}
+
+message CPutRequest {
+  string row = 1;
+  string column = 2;
+  bytes value1 = 3;
+<<<<<<< HEAD
+  string value2 = 4;
+=======
+  bytes value2 = 4;
+>>>>>>> origin/frontend-manas-integration
+}
+
+message DeleteRequest {
+  string row = 1;
+  string column = 2;
+}
+
+// Response messages
+message PutResponse {
+  bool success = 1;
+}
+
+message GetResponse {
+  bytes value = 1;
+}
+
+message CPutResponse {
+  bool success = 1;
+}
+
+message DeleteResponse {
+  bool success = 1;
+}

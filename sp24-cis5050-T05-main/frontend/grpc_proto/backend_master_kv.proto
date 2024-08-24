@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package backendmasterkv;
+
+// Define request and response messages for NotifyRecovered
+message NotifyRecoveredRequest {
+  // Add fields if necessary
+}
+
+message NotifyRecoveredResponse {
+  // You might want to include a status or a message
+  string message = 1;
+}
+
+// The gRPC service definition
+service BackendMasterKVService {
+  rpc NotifyRecovered(NotifyRecoveredRequest) returns (NotifyRecoveredResponse) {};
+}
