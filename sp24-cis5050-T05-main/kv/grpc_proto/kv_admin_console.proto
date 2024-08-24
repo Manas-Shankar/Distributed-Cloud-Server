@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package admin;
+
+// The AdminKV service definition.
+service AdminKV {
+  // Retrieve all KeyValue pairs stored.
+  rpc GetAllKeyValuePairs (GetAllRequest) returns (GetAllResponse) {}
+}
+
+// GetAllRequest message, does not need to contain any details.
+message GetAllRequest {
+  // This message can be empty as no specific input is required to fetch all pairs
+}
+
+// GetAllResponse message, used to send back all key-value pairs.
+message GetAllResponse {
+  bool success = 1;             // Whether the fetch operation was successful
+  string message = 2;           // Additional information about the operation
+  repeated KeyValue pairs = 3;  // A list of all key-value pairs
+}
+
+// KeyValue message used to encapsulate a key-value pair.
+message KeyValue {
+  string row = 1;     // The row identifier
+  string column = 2;  // The column identifier
+  string value = 3;   // The value associated with the row-column pair
+}

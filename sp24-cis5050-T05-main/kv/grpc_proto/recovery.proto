@@ -1,0 +1,85 @@
+
+syntax = "proto3";
+
+package recovery;
+
+// Service definition
+service RecoveryService {
+    // starts recovery process and returns the neccessary data for recovery in crashed node
+    rpc StartRecovery(StartRecoveryRequest) returns (StartRecoveryResponse);
+
+    // get log files from primary
+    rpc GetLogFiles(GetLogFilesRequest) returns (LogFiles);
+
+    // client requests checkpoint data from server to signal client is ready
+    rpc GetCheckpointFiles(CheckpointFilesRequest) returns (CheckpointFilesResponse);
+
+    // send CheckpointChunks one by one from server to client
+    rpc SendCheckpointChunk(FileChunk) returns (CheckpointChunkResponse);
+
+    // notify other nodes the checkpointing is complete
+    rpc NotifyRecoveryComplete(RecoveryCompleteRequest) returns (RecoveryCompleteResponse);
+}
+
+// Messages 
+
+// For StartRecovery Call:
+message StartRecoveryRequest {
+    int64 checkpoint_version_number = 1;
+    repeated int64 log_number = 2;
+}
+
+enum RecoveryType {
+  LOGFILES = 0;
+  CHECKPOINT_FILE = 1;
+  UP_TO_DATE = 2;
+}
+
+message StartRecoveryResponse {
+    RecoveryType type = 1;
+}
+
+message CheckpointFilesRequest {
+    string address = 1;
+}
+
+message CheckpointFilesResponse {
+    bool ack = 1;
+}
+
+
+// LogFiles Call:
+
+message GetLogFilesRequest {
+    repeated int64 log_number = 1;
+}
+
+message Log_File {
+    string content = 1;
+    string file_name = 2;
+}
+
+message LogFiles {
+    repeated Log_File log_files = 1;
+}
+
+message FileChunk {
+    bytes content = 1;          // byte content of chunk 
+    bool is_final_chunk = 2;    // indicates this is the last chunk in the stream
+    string filename = 3;        // defines which file the chunk belongs to
+    int32 tablet_id = 4;        // defines which tablet our chunk belongs to
+    string starting_range = 5;  // get the starting range for this file
+}
+
+message CheckpointChunkResponse {
+    int32 bytesReceived = 1;
+}
+ 
+// NotifyRecoveryComplete call
+message RecoveryCompleteRequest {
+    string address = 1;
+}
+
+message RecoveryCompleteResponse {
+}
+

@@ -1,0 +1,33 @@
+// replication.proto
+
+syntax = "proto3";
+
+package replication;
+
+// Define a simple Operation enum to specify the transaction type
+enum Operation {
+  PUT = 0;
+  DELETE = 1;
+  CPUT = 2; 
+}
+
+// Transaction message encapsulates the details of a transaction
+message Transaction {
+  Operation operation = 1;
+  string key = 2;
+  string column = 3;
+  string value = 4;
+  string old_value = 5; // Used in conditional puts
+}
+
+// The Replication service definition
+service ReplicationService {
+  // RPC for handling a transaction
+  rpc forwardTransaction(Transaction) returns (TransactionResponse) {}
+}
+
+// The response message could include a success flag and a message
+message TransactionResponse {
+  bool success = 1;
+  string message = 2;
+}
