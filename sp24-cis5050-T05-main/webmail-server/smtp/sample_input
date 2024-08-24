@@ -1,0 +1,14 @@
+grpcurl -plaintext -d '{"session_id": "12345", "command": "HELO"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "MAIL FROM:<penn@localhost>"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "RCPT TO:<linhphan@localhost>"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "RCPT TO:<nonexistent.mailbox@localhost>"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "DATA"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "To: Linh Thi Xuan Phan <linhphan@localhost>"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "Date: Fri, 21 Oct 2016 18:29:11 -0400"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "I just wanted to see whether my new email account works."}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "Bye"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "."}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+grpcurl -plaintext -d '{"session_id": "12345", "command": "QUIT"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+gr
+pcurl -plaintext -d '{"session_id": "12345", "command": "HELO"}' localhost:5000 webmailgrpc.WebmailService/SendCommand
+
