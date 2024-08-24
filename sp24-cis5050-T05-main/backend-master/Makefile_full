@@ -1,0 +1,51 @@
+CXX = g++  # Use g++ as the compiler
+CXXFLAGS = -std=c++11 -Iinclude -Igrpc_proto/frontend_backend_master -Igrpc_proto/backend_master_kv -pthread  # Compiler flags
+LDFLAGS = -L/usr/local/lib -lgrpc++ -lgrpc -lgrpc++_reflection -lprotobuf -lpthread -ldl  # Linker flags
+
+PROTOC = protoc  # Protocol buffer compiler
+GRPC_CPP_PLUGIN = grpc_cpp_plugin  # gRPC C++ plugin
+GRPC_CPP_PLUGIN_PATH ?= `which $(GRPC_CPP_PLUGIN)`
+
+# Source and Object directories
+SRC_DIR = src
+OBJ_DIR = obj
+BIN_DIR = bin
+
+# List of source files to compile
+SOURCES = $(SRC_DIR)/backend_master_kv_service_impl.cpp \
+          $(SRC_DIR)/frontend_backend_master_service_impl.cpp \
+          $(SRC_DIR)/BackendMasterController.cpp \
+          $(SRC_DIR)/backend_server_main.cpp
+
+OBJECTS = $(SOURCES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+TARGET = $(BIN_DIR)/backend_server
+
+all: proto $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $^ $(LDFLAGS) -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Protobuf and gRPC compilation for both directories
+PROTO_FILES_FB = $(wildcard grpc_proto/frontend_backend_master/*.proto)
+PROTO_FILES_BK = $(wildcard grpc_proto/backend_master_kv/*.proto)
+
+proto: $(PROTO_FILES_FB:.proto=.grpc.pb.cc) $(PROTO_FILES_FB:.proto=.pb.cc) \
+       $(PROTO_FILES_BK:.proto=.grpc.pb.cc) $(PROTO_FILES_BK:.proto=.pb.cc)
+
+%.grpc.pb.cc %.grpc.pb.h %.pb.cc %.pb.h: %.proto
+	$(PROTOC) -I grpc_proto --grpc_out=grpc_proto --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) $<
+	$(PROTOC) -I grpc_proto --cpp_out=grpc_proto $<
+
+clean:
+	rm -f $(OBJECTS) $(TARGET) $(PROTO_FILES_FB:.proto=.grpc.pb.cc) $(PROTO_FILES_FB:.proto=.pb.cc) \
+		$(PROTO_FILES_FB:.proto=.grpc.pb.h) $(PROTO_FILES_FB:.proto=.pb.h) \
+		$(PROTO_FILES_BK:.proto=.grpc.pb.cc) $(PROTO_FILES_BK:.proto=.pb.cc) \
+		$(PROTO_FILES_BK:.proto=.grpc.pb.h) $(PROTO_FILES_BK:.proto=.pb.h)
+	@rm -rf $(OBJ_DIR) $(BIN_DIR)
+
+.PHONY: all clean proto
