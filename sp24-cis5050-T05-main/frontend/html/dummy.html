@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Node Management Console</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Node Management Console</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Node ID</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example row -->
+            <tr>
+                <td>Node1</td>
+                <td>Active</td>
+                <td>
+                    <form action="/shutdown" method="POST" class="action-form" style="display: inline;">
+                        <input type="hidden" name="nodeId" value="Node1">
+                        <button type="submit" class="btn btn-danger">Shutdown</button>
+                    </form>
+                    <form action="/restart" method="POST" class="action-form" style="display: inline;">
+                        <input type="hidden" name="nodeId" value="Node1">
+                        <button type="submit" class="btn btn-warning">Restart</button>
+                    </form>
+                </td>
+            </tr>
+            <!-- More rows as needed -->
+        </tbody>
+    </table>
+</div>
+<script>
+$(document).ready(function() {
+    $('.action-form').on('submit', function(e) {
+        e.preventDefault(); // Stop the form from causing a page reload
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: form.serialize(), // Serialize the form data
+            success: function(response) {
+                console.log('Action was successful');
+                alert('Action performed successfully');
+            },
+            error: function() {
+                console.log('Error with the action');
+                alert('There was an error performing the action');
+            }
+        });
+    });
+});
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

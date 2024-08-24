@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PennCloud</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Download Files and Folders</h1>
+      <a class="btn btn-primary" href="download" role="button">Go to Download</a>
+      <h1>Upload</h1>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Create New Folder</div>
+        <div class="panel-body">
+          <form action="newfolder" method="post">
+            <input type="text" name="foldername" value="" placeholder="Folder Name"/>
+            <input type="submit" value="Create"/>
+          </form>
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">Upload New File</div>
+        <div class="panel-body">
+          <form class="form-inline" action="upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <input type="file" name="file" value="">
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Upload"/>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="panel panel-warning">
+        <div class="panel-heading">Move File/Folder. Enter respective details to move corresponding entity.</div>
+        <div class="panel-body">
+          <form action="movefile" method="post">
+            <input type="text" name="foldername" value="" placeholder="Filename">
+            <input type="text" name="oldname" value="" placeholder="Old Folder">
+            <input type="text" name="newname" value="" placeholder="New Folder">
+            <input type="submit" value="Move"/>
+          </form>
+        </div>
+      </div>
+
+      <div class="panel panel-warning">
+        <div class="panel-heading">Rename File/Folder</div>
+        <div class="panel-body">
+          <form action="renamefile" method="post">
+            <input type="text" name="oldname" value="" placeholder="Old Name">
+            <input type="text" name="newname" value="" placeholder="New Name">
+            <input type="submit" value="Rename"/>
+          </form>
+        </div>
+      </div>
+
+      <div class="panel panel-danger">
+        <div class="panel-heading">Delete File/Folder</div>
+        <div class="panel-body">
+          <form action="/delete" method="post">
+            <input type="text" name="name" value="" placeholder="Name">
+            <input type="submit" value="Delete"/>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

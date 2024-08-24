@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Console</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 4px;
+        }
+        .shutdown, .restart {
+            color: white;
+        }
+        .shutdown {
+            background-color: red;
+        }
+        .restart {
+            background-color: green;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Console</h1>
+        <h2>Nodes</h2>
+        <table id="nodeTable">
+            <thead>
+                <tr>
+                    <th>Node ID</th>
+                    <th>Group</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Node information will be populated here -->
+                $nodes
+            </tbody>
+        </table>
+        <h2>KV-store</h2>
+        <table id="kvTable">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                $kvstore
+            </tbody>
+        </table>
+        <div class="nav-buttons">
+            <button onclick="previousPage()">Previous</button>
+            <button onclick="nextPage()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        function handleNodeAction(nodeId, action) {
+            fetch('/node/action', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nodeId, action })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send request');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response from server:', data);
+            })
+            .catch(error => {
+                console.error('Error sending request:', error);
+            });
+        }
+
+
+        function previousPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                fetchKVData();
+            }
+        }
+
+        function nextPage() {
+            currentPage++;
+            fetchKVData();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchNodes();
+            fetchKVData();
+        });
+
+    </script>
+</body>
+</html>
