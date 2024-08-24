@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package webmailgrpc;
+
+// The request message containing the command and a session identifier.
+message CommandRequest {
+    string session_id = 1;  // Session identifier for maintaining state
+    string command = 2;
+}
+
+// The response message containing the server's response.
+message CommandResponse {
+    string response = 1;
+    bool success = 2;
+}
+
+service WebmailService {
+    rpc SendCommand(CommandRequest) returns (CommandResponse);
+}
