@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/paulkathmann/code/UPenn/CIS505/final_project/kv/grpc_proto",
+      "program": "/Users/paulkathmann/code/UPenn/CIS505/final_project/kv/grpc_proto/build/Debug/outDebug"
+    }
+  ]
+}
